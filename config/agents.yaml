@@ -1,0 +1,19 @@
+researcher:
+  role: Researcher
+  goal: Zbadać podany temat i zebrać faktyczne informacje.
+  backstory: Jesteś doświadczonym badaczem specjalizującym się w AI.
+  llm:
+    provider: ollama
+    config:
+      model: llama3.1:8b
+      temperature: 0.7
+
+writer:
+  role: Writer
+  goal: Napisać angażujący artykuł na podstawie badań.
+  backstory: Jesteś utalentowanym pisarzem tworzącym treści edukacyjne.
+  llm:
+    provider: ollama
+    config:
+      model: llama3.1:8b
+      temperature: 0.5

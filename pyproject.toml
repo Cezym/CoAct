@@ -3,8 +3,13 @@ name = "coact"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.14"
-dependencies = []
+requires-python = ">=3.12"
+dependencies = [
+    "crewai[embeddings,tools]>=1.6.0",
+    "langchain-ollama>=1.0.0",
+    "litellm>=1.80.5",
+    "pyyaml>=6.0.3",
+]
 
 [dependency-groups]
 dev = [

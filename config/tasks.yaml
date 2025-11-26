@@ -1,0 +1,9 @@
+research_task:
+  description: Zbadać przyszłość AI, skupiając się na trendach w 2025 roku.
+  expected_output: Raport z kluczowymi faktami i źródłami.
+  agent: researcher
+
+writing_task:
+  description: Na podstawie raportu badacza, napisać krótki artykuł (500 słów) o przyszłości AI.
+  expected_output: Gotowy artykuł w formacie markdown.
+  agent: writer

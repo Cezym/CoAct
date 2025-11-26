@@ -1,6 +1,8 @@
-def main():
-    print("Hello from coact!")
+from crew import crew  # Import z crew.py
 
+# Uruchomienie crew
+result = crew.kickoff()
 
-if __name__ == "__main__":
-    main()
+# Wyświetlenie wyniku
+print("Wynik końcowy:")
+print(result)
