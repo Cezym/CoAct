@@ -1,43 +1,42 @@
-from crewai import Agent, Task, Crew
 import yaml
+from crewai import Agent, Task, Crew, Process, LLM
 
-# Ładowanie konfiguracji agentów z YAML
-with open("config/agents.yaml", "r") as f:
-    agents_config = yaml.safe_load(f)
 
-# Ładowanie konfiguracji zadań z YAML
-with open("config/tasks.yaml", "r") as f:
-    tasks_config = yaml.safe_load(f)
+def load_yaml(file_path):
+    with open(file_path, 'r') as file:
+        return yaml.safe_load(file)
 
-# Tworzenie agentów na podstawie YAML
-researcher = Agent(
-    role=agents_config["researcher"]["role"],
-    goal=agents_config["researcher"]["goal"],
-    backstory=agents_config["researcher"]["backstory"],
-    llm="ollama/llama3.1:8b",  # Bezpośrednie wskazanie modelu Ollama
-)
 
-writer = Agent(
-    role=agents_config["writer"]["role"],
-    goal=agents_config["writer"]["goal"],
-    backstory=agents_config["writer"]["backstory"],
-    llm="ollama/llama3.1:8b",  # Bezpośrednie wskazanie modelu Ollama
-)
+def create_crew(task_input):
+    # ollama_llm = OllamaLLM(model="llama3.1:8b", base_url="http://localhost:11434")
 
-# Tworzenie zadań na podstawie YAML
-research_task = Task(
-    description=tasks_config["research_task"]["description"],
-    expected_output=tasks_config["research_task"]["expected_output"],
-    agent=researcher,
-)
+    agents_config = load_yaml('config/agents.yaml')
+    tasks_config = load_yaml('config/tasks.yaml')
 
-writing_task = Task(
-    description=tasks_config["writing_task"]["description"],
-    expected_output=tasks_config["writing_task"]["expected_output"],
-    agent=writer,
-)
+    llm = LLM(
+        model="openai/gpt-oss-20b",
+        base_url="http://127.0.0.1:1234/v1",
+        api_key="not-needed"  # Dummy dla lokalnego
+    )
 
-# Definiowanie crew (zespołu)
-crew = Crew(
-    agents=[researcher, writer], tasks=[research_task, writing_task], verbose=True
-)
+    manager = Agent(llm=llm, **agents_config['manager'])
+    coder = Agent(llm=llm, **agents_config['coder'])
+    tester = Agent(llm=llm, **agents_config['tester'])
+    researcher = Agent(llm=llm, **agents_config['researcher'])
+    critic = Agent(llm=llm, **agents_config['critic'])
+
+    manager_task = Task(agent=manager, **tasks_config['manager_task'])
+    coder_task = Task(agent=coder, **tasks_config['coder_task'])
+    tester_task = Task(agent=tester, **tasks_config['tester_task'])
+    researcher_task = Task(agent=researcher, **tasks_config['researcher_task'])
+    critic_task = Task(agent=critic, **tasks_config['critic_task'])
+
+    crew = Crew(
+        agents=[coder, tester, researcher, critic],
+        tasks=[manager_task, coder_task, tester_task, researcher_task, critic_task],
+        manager_agent=manager,
+        process=Process.hierarchical,
+        verbose=True
+    )
+
+    return crew.kickoff(inputs={"zadanie": task_input})

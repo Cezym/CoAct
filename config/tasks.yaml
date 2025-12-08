@@ -1,9 +1,23 @@
-research_task:
-  description: Zbadać przyszłość AI, skupiając się na trendach w 2025 roku.
-  expected_output: Raport z kluczowymi faktami i źródłami.
-  agent: researcher
+manager_task:
+  description: Weź zadanie użytkownika. Przydziel do codera, zbierz feedback od testera, researchera i critika. Podsumuj i iteruj, aż akceptacja. Zaplanuj strukturę plików projektu, np. src/main.py, src/utils.py, tests/test_main.py.
+  expected_output: Podsumowany plan, w tym architektura plików, i iteracje
 
-writing_task:
-  description: Na podstawie raportu badacza, napisać krótki artykuł (500 słów) o przyszłości AI.
-  expected_output: Gotowy artykuł w formacie markdown.
-  agent: writer
+coder_task:
+  description: Na podstawie planu managera stwórz strukturę katalogów i zapisz kod w wielu plikach. Użyj os.makedirs do folderów, jeśli trzeba. Zapewnij, że pliki współpracują, np. importy między nimi.
+  expected_output: Ścieżki do utworzonych plików i potwierdzenie struktury
+
+
+tester_task:
+  description: Czytaj pliki z projektu, uruchom kod z wielu plików, znajdź błędy, opisz kroki odtwarzania.
+  expected_output: Raport z błędami
+
+
+researcher_task:
+  description: Analizuj raport testera, proponuj fixes lub ulepszenia w strukturze plików.
+  expected_output: Sugestie rozwiązań
+
+
+critic_task:
+  description: Oceń całość pod kątem wymagań. Zbierz feedback użytkownika i wystaw opinię.
+  expected_output: Opinia i decyzja użytkownika
+  human_input: true

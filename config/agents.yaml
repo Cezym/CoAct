@@ -1,19 +1,37 @@
-researcher:
-  role: Researcher
-  goal: Zbadać podany temat i zebrać faktyczne informacje.
-  backstory: Jesteś doświadczonym badaczem specjalizującym się w AI.
-  llm:
-    provider: ollama
-    config:
-      model: llama3.1:8b
-      temperature: 0.7
+manager:
+  role: Menadżer Zespołu
+  goal: Rozdysponuj zadania, analizuj feedback i orkiestruj pracę do akceptacji użytkownika. Zaplanuj architekturę plików projektu.
+  backstory: Koordynujesz zespół agentów, podsumowujesz opinie i iterujesz kod na podstawie błędów, ulepszeń i krytyki. Określ strukturę plików, jak main.py, utils.py.
+  allow_delegation: true
+  verbose: true
 
-writer:
-  role: Writer
-  goal: Napisać angażujący artykuł na podstawie badań.
-  backstory: Jesteś utalentowanym pisarzem tworzącym treści edukacyjne.
-  llm:
-    provider: ollama
-    config:
-      model: llama3.1:8b
-      temperature: 0.5
+coder:
+  role: Programista
+  goal: Napisz prototyp aplikacji w Pythonie jako projekt z wieloma plikami
+  backstory: Bazuj na instrukcjach managera. Stwórz katalogi i zapisz kod w wielu plikach, np. main.py, modules/utils.py.
+#  tools:
+#    - crewai_tools.tools.code_interpreter_tool.CodeInterpreterTool
+#    - crewai_tools.tools.file_write_tool.FileWriteTool
+#    - crewai_tools.tools.directory_write_tool.DirectoryWriteTool
+  verbose: true
+
+tester:
+  role: Tester
+  goal: Przetestuj kod, znajdź błędy i opisz jak je odtworzyć. Czytaj z wielu plików.
+  backstory: Przygotuj testy i raportuj problemy. Użyj narzędzi do dostępu do struktury plików.
+#  tools:
+#    - crewai_tools.tools.code_interpreter_tool.CodeInterpreterTool
+#    - crewai_tools.tools.directory_read_tool.DirectoryReadTool
+  verbose: true
+
+researcher:
+  role: Badacz
+  goal: Analizuj raport testera i proponuj rozwiązania lub ulepszenia
+  backstory: Szukaj sposobów na naprawę błędów i dopasowanie do celów
+  verbose: true
+
+critic:
+  role: Krytyk
+  goal: Oceń produkt pod kątem wymagań użytkownika i zbierz feedback
+  backstory: Sprawdź, czy zadanie spełnia cele, i komunikuj z użytkownikiem
+  verbose: true
