@@ -2,13 +2,14 @@ import sys
 from crew import create_crew
 import os
 import shutil
+import dotenv
 
 def main():
     # if len(sys.argv) < 2:
     #     print("Podaj zadanie, np: python main.py 'Napisz prosty kalkulator w Pythonie'")
     #     sys.exit(1)
 
-    initial_task = "Napisz gre w snake w python"#input("Podaj zadanie")#sys.argv[1]
+    initial_task = "Program typical, simple calculator in python; assume answers if you are not sure"#input("Podaj zadanie")#sys.argv[1]
     print(f"{initial_task=}")
     approved = False
     inputs = {"zadanie": initial_task}
@@ -19,7 +20,6 @@ def main():
     # os.makedirs(project_dir)
 
     while not approved:
-        # Przekaż katalog do inputs, by agenci wiedzieli, gdzie pisać
         #inputs["project_dir"] = project_dir
         result = create_crew(inputs["zadanie"])
         print(result)

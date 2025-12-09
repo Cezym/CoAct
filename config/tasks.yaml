@@ -1,23 +1,29 @@
 manager_task:
-  description: Weź zadanie użytkownika. Przydziel do codera, zbierz feedback od testera, researchera i critika. Podsumuj i iteruj, aż akceptacja. Zaplanuj strukturę plików projektu, np. src/main.py, src/utils.py, tests/test_main.py.
-  expected_output: Podsumowany plan, w tym architektura plików, i iteracje
+  description:
+    Take the user's task to write software specifically - {task}. Assign to the coder, collect feedback from the tester, researcher, and critic. Summarize and iterate until acceptance. Plan the project file structure, e.g. src/main.py or tests.
+  expected_output: Summarized plan, including project file architecture, and iterations
 
 coder_task:
-  description: Na podstawie planu managera stwórz strukturę katalogów i zapisz kod w wielu plikach. Użyj os.makedirs do folderów, jeśli trzeba. Zapewnij, że pliki współpracują, np. importy między nimi.
-  expected_output: Ścieżki do utworzonych plików i potwierdzenie struktury
-
+  description: Based on the manager's plan on {task}, describe the directory structure and code in multiple files. Ensure files work together, e.g. imports between them. Display the code for each file.
+  expected_output: File paths and their code (in the output)
+  context:
+    - manager_task
 
 tester_task:
-  description: Czytaj pliki z projektu, uruchom kod z wielu plików, znajdź błędy, opisz kroki odtwarzania.
-  expected_output: Raport z błędami
-
+  description: Analyze the described code about {task} from multiple files, find bugs, describe reproduction steps.
+  expected_output: Bug report
+  context:
+    - coder_task
 
 researcher_task:
-  description: Analizuj raport testera, proponuj fixes lub ulepszenia w strukturze plików.
-  expected_output: Sugestie rozwiązań
-
+  description: Analyze the tester's report on {task}, propose fixes or improvements in the file structure.
+  expected_output: Solution suggestions
+  context:
+    - manager_task
 
 critic_task:
-  description: Oceń całość pod kątem wymagań. Zbierz feedback użytkownika i wystaw opinię.
-  expected_output: Opinia i decyzja użytkownika
+  description: Evaluate the whole against project requirements about {task}. Collect user feedback and give an opinion.
+  expected_output: Opinion and user decision
+  context:
+    - researcher_task
   human_input: true
