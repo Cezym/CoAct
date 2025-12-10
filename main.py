@@ -1,37 +1,41 @@
 import sys
-from crew import create_crew
-import os
-import shutil
-import dotenv
+import yaml
+from crew import GameBuilderCrew
 
-def main():
-    # if len(sys.argv) < 2:
-    #     print("Podaj zadanie, np: python main.py 'Napisz prosty kalkulator w Pythonie'")
-    #     sys.exit(1)
 
-    initial_task = "Program typical, simple calculator in python; assume answers if you are not sure"#input("Podaj zadanie")#sys.argv[1]
-    print(f"{initial_task=}")
-    approved = False
-    inputs = {"zadanie": initial_task}
-    # project_dir = "project_output"  # Katalog na strukturę plików
-    #
-    # if os.path.exists(project_dir):
-    #     shutil.rmtree(project_dir)  # Czyszczenie przed startem
-    # os.makedirs(project_dir)
+def run():
+    # Replace with your inputs, it will automatically interpolate any tasks and agents information
+    print("## Welcome to the Crew")
+    print('-------------------------------')
 
-    while not approved:
-        #inputs["project_dir"] = project_dir
-        result = create_crew(inputs["zadanie"])
-        print(result)
+    inputs = {
+        'game': input("write instructions:")
+    }
+    game = GameBuilderCrew().crew().kickoff(inputs=inputs)
 
-        feedback = input("Co zmienić? Lub wpisz 'ok' by zaakceptować: ")
+    print("\n\n########################")
+    print("## Here is the result")
+    print("########################\n")
+    print("final code:...")
+    print("\n\n########################")
+    print(game)
 
-        if feedback.lower() == 'ok':
-            approved = True
-            print(f"Projekt zaakceptowany. Pliki w ")#{project_dir}.")
-        else:
-            inputs["zadanie"] = f"{initial_task} z zmianami: {feedback}"
-            print("Iteruję...")
+def train():
+    """
+    Train the crew for a given number of iterations.
+    """
+
+    with open('src/game_builder_crew/config/gamedesign.yaml', 'r', encoding='utf-8') as file:
+        examples = yaml.safe_load(file)
+
+    inputs = {
+        'game': examples['example1_pacman']
+    }
+    try:
+        GameBuilderCrew().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
+
+    except Exception as e:
+        raise Exception(f"An error occurred while training the crew: {e}")
 
 if __name__ == "__main__":
-    main()
+    run()

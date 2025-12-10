@@ -1,29 +1,37 @@
-manager_task:
-  description:
-    Take the user's task to write software specifically - {task}. Assign to the coder, collect feedback from the tester, researcher, and critic. Summarize and iterate until acceptance. Plan the project file structure, e.g. src/main.py or tests.
-  expected_output: Summarized plan, including project file architecture, and iterations
+code_task:
+  description: >
+    You will create a program using python, these are the instructions:
 
-coder_task:
-  description: Based on the manager's plan on {task}, describe the directory structure and code in multiple files. Ensure files work together, e.g. imports between them. Display the code for each file.
-  expected_output: File paths and their code (in the output)
-  context:
-    - manager_task
+    Instructions
+    ------------
+    {game}
+    
+  expected_output: >
+    Your Final answer must be the full python code, only the python code and nothing else.
 
-tester_task:
-  description: Analyze the described code about {task} from multiple files, find bugs, describe reproduction steps.
-  expected_output: Bug report
-  context:
-    - coder_task
+review_task:
+  description: >
+    You will create a program using python, these are the instructions:
 
-researcher_task:
-  description: Analyze the tester's report on {task}, propose fixes or improvements in the file structure.
-  expected_output: Solution suggestions
-  context:
-    - manager_task
+    Instructions
+    ------------
+    {game}
 
-critic_task:
-  description: Evaluate the whole against project requirements about {task}. Collect user feedback and give an opinion.
-  expected_output: Opinion and user decision
-  context:
-    - researcher_task
-  human_input: true
+    Using the code you got, check for errors. Check for logic errors,
+    syntax errors, missing imports, variable declarations, mismatched brackets,
+    and security vulnerabilities.
+  expected_output: >
+    Your Final answer must be the full python code, only the python code and nothing else.
+
+evaluate_task:
+  description: >
+    You are helping create a program using python, these are the instructions:
+
+    Instructions
+    ------------
+    {game}
+
+    You will look over the code to insure that it is complete and
+    does the job that it is supposed to do.
+  expected_output: >
+    Your Final answer must be the full python code, only the python code and nothing else.
