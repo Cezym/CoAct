@@ -1,4 +1,14 @@
-provider: "openai"
-model: "openai/gpt-oss-20b"
-base_url: "http://127.0.0.1:1234/v1"
-api_key: "not-needed"
+local_gpt_oss_20b:
+  provider: "openai"
+  model: "openai/gpt-oss-20b"
+  base_url: "http://127.0.0.1:1234/v1"
+  api_key: "not-needed"
+
+local_llama3_1_8b:
+  model: "ollama/llama3.1:8b"
+  api_base: "http://127.0.0.1:11434"
+
+local_nomic-embed-text_latest:
+  "provider": "ollama"
+  "config":
+    "model": "nomic-embed-text:latest"

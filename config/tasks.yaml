@@ -1,10 +1,20 @@
+clarifier_task:
+  description: >
+    To help Senior Software Engineer program whole project, gather more information from human, ask questions about given task:
+    
+    {task}
+  human_input: True
+  expected_output: >
+    List of humans concerns about task.
+
 code_task:
   description: >
     You will create a program using python, these are the instructions:
 
     Instructions
     ------------
-    {game}
+    
+    {task}
     
   expected_output: >
     Your Final answer must be the full python code, only the python code and nothing else.
@@ -15,7 +25,8 @@ review_task:
 
     Instructions
     ------------
-    {game}
+    
+    {task}
 
     Using the code you got, check for errors. Check for logic errors,
     syntax errors, missing imports, variable declarations, mismatched brackets,
@@ -29,7 +40,8 @@ evaluate_task:
 
     Instructions
     ------------
-    {game}
+    
+    {task}
 
     You will look over the code to insure that it is complete and
     does the job that it is supposed to do.
