@@ -10,7 +10,7 @@ def run():
     print("## Welcome to the CoAct")
     print("-------------------------------")
 
-    inputs = {"task": "simple calculator with UI"}#input("write instructions:")}
+    inputs = {"task": "Write best script (role, goal, backstory) for AI agent that will write best tests for given code."}#input("write instructions:")}
     final_answer = DevelopersCrew().crew().kickoff(inputs=inputs)
 
     print("\n\n########################")
@@ -43,4 +43,5 @@ def train():
 
 if __name__ == "__main__":
     os.environ["OTEL_SDK_DISABLED"] = "true"  # Turn off telemetry
+    os.environ["CREWAI_TRACING_ENABLED"] = "false" # Turn off tracing
     run()

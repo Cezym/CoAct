@@ -9,6 +9,7 @@ local_llama3_1_8b:
   api_base: "http://127.0.0.1:11434"
 
 local_nomic-embed-text_latest:
-  "provider": "ollama"
-  "config":
-    "model": "nomic-embed-text:latest"
+  provider: "ollama"
+  config:
+    model_name: "nomic-embed-text:latest"
+    url: "http://localhost:11434/api/embeddings"

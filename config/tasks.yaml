@@ -1,11 +1,14 @@
 clarifier_task:
   description: >
     To help Senior Software Engineer program whole project, gather more information from human, ask questions about given task:
+
+    Instructions
+    ------------
     
     {task}
   human_input: True
   expected_output: >
-    List of humans concerns about task.
+    Your Final answer must be in a markdown format, easy understandable, do not give examples of code in your final respond.
 
 code_task:
   description: >
@@ -15,7 +18,6 @@ code_task:
     ------------
     
     {task}
-    
   expected_output: >
     Your Final answer must be the full python code, only the python code and nothing else.
 
@@ -45,5 +47,20 @@ evaluate_task:
 
     You will look over the code to insure that it is complete and
     does the job that it is supposed to do.
+  expected_output: >
+    Your Final answer must be the full python code, only the python code and nothing else.
+
+human_input_evaluation_task:
+  description: >
+    You are helping create a program using python, these are the instructions:
+
+    Instructions
+    ------------
+    
+    {task}
+
+    Ask human if anything more is needed to change, add or remove?
+    Be sure to include in code everything that human said.
+  human_input: True
   expected_output: >
     Your Final answer must be the full python code, only the python code and nothing else.

@@ -1,8 +1,6 @@
 import yaml
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task, llm
-from crewai.rag.embeddings.providers.ollama.types import OllamaProviderSpec
-
 
 @CrewBase
 class DevelopersCrew:
@@ -89,20 +87,26 @@ class DevelopersCrew:
             agent=self.chief_qa_engineer_agent(),
         )
 
+    @task
+    def human_input_evaluation_task(self):
+        return Task(
+            config=self.tasks_config["human_input_evaluation_task"],
+            agent=self.chief_qa_engineer_agent(),
+        )
+
     @crew
     def crew(self) -> Crew:
         """Creates the GameBuilderCrew"""
+        for agent in self.agents:
+            print(agent)
+        print()
+        for task in self.tasks:
+            print(task)
         return Crew(
             agents=self.agents,  # Automatically created by the @agent decorator
             tasks=self.tasks,  # Automatically created by the @task decorator
             process=Process.sequential,
             verbose=True,
-            memory=True,
-            # embedder={
-            #     "provider": "ollama",
-            #     "config": {
-            #         "model": "mxbai-embed-large",
-            #         "url": "http://localhost:11434/api/embeddings"
-            #     }
-            # },
+            memory=False,
+            embedder=DevelopersCrew.llm_providers_config["local_nomic-embed-text_latest"]
         )

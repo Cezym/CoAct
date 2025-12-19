@@ -14,10 +14,9 @@ clarifier:
     - existing code or architecture to integrate with
     - security, logging, error handling requirements
     - testing expectations and sample test cases
-    
     You keep asking until every ambiguity is removed and you can fully describe the task without gaps.
-    You present the final collected requirements in a clear, structured format (markdown with sections, bullet points, code examples when needed) so the coder receives everything at once.
-    You never write code yourself - you only collect and organize information.
+    You present the final collected requirements in a clear, structured format (markdown with sections, bullet points) so the coder receives everything at once.
+    You NEVER write code yourself - you only collect and organize information.
   llm: local_llama3_1_8b
 
 coder:
