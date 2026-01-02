@@ -64,3 +64,49 @@ human_input_evaluation_task:
   human_input: True
   expected_output: >
     Your Final answer must be the full python code, only the python code and nothing else.
+
+# Evaluation
+
+readability_task:
+  description: "Focus ONLY on Code Readability from the rules. Rate 1-5 with short justification. Output: Code Readability: score - justification"
+  expected_output: "Single line with score and justification for readability"
+
+documentation_task:
+  description: "Focus ONLY on Documentation from the rules. Rate 1-5 with short justification. Output: Documentation: score - justification"
+  expected_output: "Single line with score and justification for documentation"
+
+functional_task:
+  description: "Focus ONLY on Functional Correctness from the rules. Rate 1-5 with short justification. Output: Functional Correctness: score - justification"
+  expected_output: "Single line"
+
+tests_task:
+  description: "Focus ONLY on Tests from the rules. Rate 1-5 with short justification. Output: Tests: score - justification"
+  expected_output: "Single line"
+
+complexity_task:
+  description: "Focus ONLY on Complexity from the rules. Rate 1-5 with short justification. Output: Complexity: score - justification"
+  expected_output: "Single line"
+
+duplication_task:
+  description: "Focus ONLY on Code Duplication from the rules. Rate 1-5 with short justification. Output: Code Duplication: score - justification"
+  expected_output: "Single line"
+
+performance_task:
+  description: "Focus ONLY on Performance from the rules. Rate 1-5 with short justification. Output: Performance: score - justification"
+  expected_output: "Single line"
+
+security_task:
+  description: "Focus ONLY on Security from the rules. Rate 1-5 with short justification. Output: Security: score - justification"
+  expected_output: "Single line"
+
+maintainability_task:
+  description: "Focus ONLY on Maintainability from the rules. Rate 1-5 with short justification. Output: Maintainability: score - justification"
+  expected_output: "Single line"
+
+compliance_task:
+  description: "Focus ONLY on Compliance with Standards from the rules. Rate 1-5 with short justification. Output: Compliance with Standards: score - justification"
+  expected_output: "Single line"
+
+summary_task:
+  description: "Compile all previous evaluations. List each category with score and justification. Calculate total (out of 50) and average (out of 5). Add overall feedback."
+  expected_output: "Full report with all categories, total score, and summary"

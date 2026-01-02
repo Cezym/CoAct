@@ -8,7 +8,11 @@ local_llama3_1_8b:
   model: "ollama/llama3.1:8b"
   api_base: "http://127.0.0.1:11434"
 
-local_nomic-embed-text_latest:
+local_codegemma_7b:
+  model: "ollama/codegemma:7b"
+  api_base: "http://127.0.0.1:11434"
+
+memory_embedder:
   provider: "ollama"
   config:
     model_name: "nomic-embed-text:latest"
