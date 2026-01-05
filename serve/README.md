@@ -1,3 +1,4 @@
+#dodane
 # coact - HTTP API
 
 HTTP API for serving predictions.
@@ -27,3 +28,4 @@ HTTP API for serving predictions.
         │   ├── input.json    <- Test input data
         │   └── output.json   <- Test output data
         └── test_app.py       <- Integration tests for the HTTP API
+#koniec

@@ -3,13 +3,16 @@ name = "coact"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+# Uwaga: w wielu środowiskach (np. WSL) domyślny Python to 3.11.
+# Projekt działa na 3.11+ (serwis RAG w dockerze też jest na 3.11), więc nie blokujemy instalacji.
+requires-python = ">=3.11"
 dependencies = [
     "crewai[embeddings,tools]>=1.6.0",
     "langchain-ollama>=1.0.0",
     "litellm>=1.80.5",
     "ollama>=0.6.1",
     "pyyaml>=6.0.3",
+    "requests>=2.32.3",
 ]
 
 [project.scripts]
