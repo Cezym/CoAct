@@ -1,6 +1,19 @@
+from crewai import Agent, Crew, Task, LLM
+from crewai.project import CrewBase, agent, task, crew
 import yaml
-from crewai import Agent, Crew, Process, Task, LLM
-from crewai.project import CrewBase, agent, crew, task, llm
+
+def load_yaml(file_path):
+    with open(file_path, "r") as file:
+        return yaml.safe_load(file)
+
+
+llm_providers_config = load_yaml("../config/llm_providers.yaml")
+LLMS = {}
+
+for llm in llm_providers_config:
+    print(f"{llm=}")
+    print(f"{llm_providers_config[llm]=}")
+    LLMS[llm] = LLM(**llm_providers_config[llm])
 
 
 @CrewBase
@@ -10,27 +23,13 @@ class DevelopersCrew:
     agents_config = "../config/agents.yaml"
     tasks_config = "../config/tasks.yaml"
 
-    @staticmethod
-    def load_yaml(file_path):
-        with open(file_path, "r") as file:
-            return yaml.safe_load(file)
-
-    llm_providers_config = load_yaml("../config/llm_providers.yaml")
-
-    @llm
-    def local_gpt_oss_20b(self):
-        return LLM(**DevelopersCrew.llm_providers_config["local_gpt_oss_20b"])
-
-    @llm
-    def local_llama3_1_8b(self):
-        return LLM(**DevelopersCrew.llm_providers_config["local_llama3_1_8b"])
-
     @agent
     def clarifier(self) -> Agent:
         return Agent(
             config=self.agents_config["clarifier"],
             allow_delegation=False,
             verbose=True,
+            llm=LLMS[self.agents_config["clarifier"]["llm_model"]],
         )
 
     @agent
@@ -39,6 +38,7 @@ class DevelopersCrew:
             config=self.agents_config["coder"],
             allow_delegation=False,
             verbose=True,
+            llm=LLMS[self.agents_config["coder"]["llm_model"]],
         )
 
     @agent
@@ -47,6 +47,7 @@ class DevelopersCrew:
             config=self.agents_config["coder"],
             allow_delegation=False,
             verbose=True,
+            llm=LLMS[self.agents_config["coder"]["llm_model"]],
         )
 
     @agent
@@ -55,14 +56,16 @@ class DevelopersCrew:
             config=self.agents_config["qa_engineer_agent"],
             allow_delegation=False,
             verbose=True,
+            llm=LLMS[self.agents_config["qa_engineer_agent"]["llm_model"]],
         )
 
     @agent
     def chief_qa_engineer_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["chief_qa_engineer_agent"],
-            allow_delegation=True,
+            allow_delegation=False,
             verbose=True,
+            llm=LLMS[self.agents_config["chief_qa_engineer_agent"]["llm_model"]],
         )
 
     @task
@@ -85,8 +88,8 @@ class DevelopersCrew:
     def review_task(self) -> Task:
         return Task(
             name="review_task",
-            config = self.tasks_config["review_task"],
-            agent = self.qa_engineer_agent(),
+            config=self.tasks_config["review_task"],
+            agent=self.qa_engineer_agent(),
             #### output_json=ResearchRoleRequirements
         )
 
@@ -108,7 +111,7 @@ class DevelopersCrew:
 
     @crew
     def crew(self) -> Crew:
-        """Creates the GameBuilderCrew"""
+        """Creates the DevelopersCrew"""
         for agent in self.agents:
             print(agent)
         print()
@@ -123,10 +126,11 @@ class DevelopersCrew:
             embedder=DevelopersCrew.llm_providers_config["memory_embedder"]
         )
 
+
 import yaml
 from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, agent, crew, task, llm
-from crewai import LLM
+from crewai.project import CrewBase, agent, crew, task
+
 
 @CrewBase
 class CodeEvaluationCrew:
@@ -135,96 +139,92 @@ class CodeEvaluationCrew:
     agents_config = "../config/agents.yaml"
     tasks_config = "../config/tasks.yaml"
 
-    @llm
-    def local_codegemma_7b(self):
-        return LLM(**DevelopersCrew.llm_providers_config["local_codegemma_7b"])
-
     @agent
     def readability_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["readability_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["readability_agent"]["llm_model"]],
         )
 
     @agent
     def documentation_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["documentation_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["documentation_agent"]["llm_model"]],
         )
 
     @agent
     def functional_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["functional_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["functional_agent"]["llm_model"]],
         )
 
     @agent
     def tests_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["tests_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["tests_agent"]["llm_model"]],
         )
 
     @agent
     def complexity_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["complexity_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["complexity_agent"]["llm_model"]],
         )
 
     @agent
     def duplication_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["duplication_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["duplication_agent"]["llm_model"]],
         )
 
     @agent
     def performance_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["performance_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["performance_agent"]["llm_model"]],
         )
 
     @agent
     def security_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["security_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["security_agent"]["llm_model"]],
         )
 
     @agent
     def maintainability_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["maintainability_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["maintainability_agent"]["llm_model"]],
         )
 
     @agent
     def compliance_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["compliance_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["compliance_agent"]["llm_model"]],
         )
 
     @agent
     def summary_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["summary_agent"],
-            llm=self.codegemma(),
-            verbose=True
+            verbose=True,
+            llm=LLMS[self.agents_config["summary_agent"]["llm_model"]],
         )
 
     @task
@@ -232,7 +232,7 @@ class CodeEvaluationCrew:
         return Task(
             config=self.tasks_config["readability_task"],
             agent=self.readability_agent(),
-            description="{rules}\n\nCode to evaluate:\n{code}\n\n" + self.tasks_config["readability_task"]["description"],
+            description="Code to evaluate:\n{code}\n\n" + self.tasks_config["readability_task"]["description"],
             expected_output=self.tasks_config["readability_task"]["expected_output"]
         )
 
@@ -241,7 +241,7 @@ class CodeEvaluationCrew:
         return Task(
             config=self.tasks_config["documentation_task"],
             agent=self.documentation_agent(),
-            description="{rules}\n\nCode to evaluate:\n{code}\n\n" + self.tasks_config["documentation_task"]["description"],
+            description="Code to evaluate:\n{code}\n\n" + self.tasks_config["documentation_task"]["description"],
             expected_output=self.tasks_config["documentation_task"]["expected_output"]
         )
 
@@ -250,7 +250,7 @@ class CodeEvaluationCrew:
         return Task(
             config=self.tasks_config["functional_task"],
             agent=self.functional_agent(),
-            description="{rules}\n\nCode to evaluate:\n{code}\n\n" + self.tasks_config["functional_task"]["description"],
+            description="Code to evaluate:\n{code}\n\n" + self.tasks_config["functional_task"]["description"],
             expected_output=self.tasks_config["functional_task"]["expected_output"]
         )
 
@@ -259,7 +259,7 @@ class CodeEvaluationCrew:
         return Task(
             config=self.tasks_config["tests_task"],
             agent=self.tests_agent(),
-            description="{rules}\n\nCode to evaluate:\n{code}\n\n" + self.tasks_config["tests_task"]["description"],
+            description="Code to evaluate:\n{code}\n\n" + self.tasks_config["tests_task"]["description"],
             expected_output=self.tasks_config["tests_task"]["expected_output"]
         )
 
@@ -268,7 +268,7 @@ class CodeEvaluationCrew:
         return Task(
             config=self.tasks_config["complexity_task"],
             agent=self.complexity_agent(),
-            description="{rules}\n\nCode to evaluate:\n{code}\n\n" + self.tasks_config["complexity_task"]["description"],
+            description="Code to evaluate:\n{code}\n\n" + self.tasks_config["complexity_task"]["description"],
             expected_output=self.tasks_config["complexity_task"]["expected_output"]
         )
 
@@ -277,7 +277,7 @@ class CodeEvaluationCrew:
         return Task(
             config=self.tasks_config["duplication_task"],
             agent=self.duplication_agent(),
-            description="{rules}\n\nCode to evaluate:\n{code}\n\n" + self.tasks_config["duplication_task"]["description"],
+            description="Code to evaluate:\n{code}\n\n" + self.tasks_config["duplication_task"]["description"],
             expected_output=self.tasks_config["duplication_task"]["expected_output"]
         )
 
@@ -286,7 +286,7 @@ class CodeEvaluationCrew:
         return Task(
             config=self.tasks_config["performance_task"],
             agent=self.performance_agent(),
-            description="{rules}\n\nCode to evaluate:\n{code}\n\n" + self.tasks_config["performance_task"]["description"],
+            description="Code to evaluate:\n{code}\n\n" + self.tasks_config["performance_task"]["description"],
             expected_output=self.tasks_config["performance_task"]["expected_output"]
         )
 
@@ -295,7 +295,7 @@ class CodeEvaluationCrew:
         return Task(
             config=self.tasks_config["security_task"],
             agent=self.security_agent(),
-            description="{rules}\n\nCode to evaluate:\n{code}\n\n" + self.tasks_config["security_task"]["description"],
+            description="Code to evaluate:\n{code}\n\n" + self.tasks_config["security_task"]["description"],
             expected_output=self.tasks_config["security_task"]["expected_output"]
         )
 
@@ -304,7 +304,7 @@ class CodeEvaluationCrew:
         return Task(
             config=self.tasks_config["maintainability_task"],
             agent=self.maintainability_agent(),
-            description="{rules}\n\nCode to evaluate:\n{code}\n\n" + self.tasks_config["maintainability_task"]["description"],
+            description="Code to evaluate:\n{code}\n\n" + self.tasks_config["maintainability_task"]["description"],
             expected_output=self.tasks_config["maintainability_task"]["expected_output"]
         )
 
@@ -313,7 +313,7 @@ class CodeEvaluationCrew:
         return Task(
             config=self.tasks_config["compliance_task"],
             agent=self.compliance_agent(),
-            description="{rules}\n\nCode to evaluate:\n{code}\n\n" + self.tasks_config["compliance_task"]["description"],
+            description="Code to evaluate:\n{code}\n\n" + self.tasks_config["compliance_task"]["description"],
             expected_output=self.tasks_config["compliance_task"]["expected_output"]
         )
 
@@ -342,5 +342,5 @@ class CodeEvaluationCrew:
             agents=self.agents,
             tasks=self.tasks,
             process=Process.sequential,
-            verbose=2
+            verbose=True,
         )

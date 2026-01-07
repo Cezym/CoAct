@@ -72,7 +72,7 @@ readability_task:
   expected_output: "Single line with score and justification for readability"
 
 documentation_task:
-  description: "Focus ONLY on Documentation from the rules. Rate 1-5 with short justification. Output: Documentation: score - justification"
+  description: "Focus ONLY on Documentation from the rules. Rate 1-5 with short justification. Only rate 1 if there is no documentation. Output: Documentation: score - justification"
   expected_output: "Single line with score and justification for documentation"
 
 functional_task:
@@ -108,5 +108,5 @@ compliance_task:
   expected_output: "Single line"
 
 summary_task:
-  description: "Compile all previous evaluations. List each category with score and justification. Calculate total (out of 50) and average (out of 5). Add overall feedback."
+  description: "Compile all previous evaluations. List each category with score and justification. Add overall feedback."
   expected_output: "Full report with all categories, total score, and summary"
