@@ -1,5 +1,8 @@
+import math
+
 from crewai import Agent, Crew, Task, LLM
 from crewai.project import CrewBase, agent, task, crew
+from crewai.tools import tool
 import yaml
 
 def load_yaml(file_path):
@@ -316,6 +319,17 @@ class CodeEvaluationCrew:
             description="Code to evaluate:\n{code}\n\n" + self.tasks_config["compliance_task"]["description"],
             expected_output=self.tasks_config["compliance_task"]["expected_output"]
         )
+    @staticmethod
+    @tool("Average tool")
+    def average_tool(numbers: list) -> str:
+        """Useful for when you need to get average of a list of numbers."""
+        return str(sum(numbers)/len(numbers))
+
+    @staticmethod
+    @tool("Sum tool")
+    def sum_tool(numbers: list) -> str:
+        """Useful for when you need to get sum of a list of numbers."""
+        return str(sum(numbers))
 
     @task
     def summary_task(self) -> Task:
@@ -333,7 +347,8 @@ class CodeEvaluationCrew:
                 self.security_task(),
                 self.maintainability_task(),
                 self.compliance_task()
-            ]
+            ],
+            tools=[self.average_tool, self.sum_tool]
         )
 
     @crew

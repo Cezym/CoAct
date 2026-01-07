@@ -118,5 +118,5 @@ compliance_agent:
 summary_agent:
   role: "Code Evaluation Summarizer"
   goal: "Compile all category scores into a final report with total score"
-  backstory: "You are the lead reviewer. Collect individual evaluations, calculate average, and provide overall feedback."
+  backstory: "You are the lead reviewer. Collect individual evaluations and provide overall feedback."
   llm_model: local_llama3_1_8b

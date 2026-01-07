@@ -1,3 +1,5 @@
+import os
+
 from crew import CodeEvaluationCrew
 
 
@@ -11,6 +13,9 @@ code = load_file(code_path)
 inputs = {
     "code": code,
 }
+
+os.environ["OTEL_SDK_DISABLED"] = "true"  # Turn off telemetry
+os.environ["CREWAI_TRACING_ENABLED"] = "false"  # Turn off tracing
 
 crew = CodeEvaluationCrew().crew()
 result = crew.kickoff(inputs=inputs)
