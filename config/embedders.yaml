@@ -1,0 +1,5 @@
+evaluation_crew_embedder:
+  provider: "ollama"
+  config:
+    model_name: "nomic-embed-text:latest"
+    url: "http://localhost:11434/api/embeddings"

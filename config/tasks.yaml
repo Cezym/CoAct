@@ -68,45 +68,45 @@ human_input_evaluation_task:
 # Evaluation
 
 readability_task:
-  description: "Focus ONLY on Code Readability from the rules. Rate 1-5 with short justification. Output: Code Readability: score - justification"
+  description: "Focus ONLY on Code Readability from the rules. Rate 1-5 with short justification. Output: Code Readability: score - justification DO NOT WRITE ANY CODE"
   expected_output: "Single line with score and justification i.e.: 5 - *justification*"
 
 documentation_task:
-  description: "Focus ONLY on Documentation from the rules. Rate 1-5 with short justification. Only rate 1 if there is no documentation. Output: Documentation: score - justification"
+  description: "Focus ONLY on Documentation from the rules. Rate 1-5 with short justification. Only rate 1 if there is no documentation. Output: Documentation: score - justification DO NOT WRITE ANY CODE"
   expected_output: "Single line with score and justification i.e.: 5 - *justification*"
 
 functional_task:
-  description: "Focus ONLY on Functional Correctness from the rules. Rate 1-5 with short justification. Output: Functional Correctness: score - justification"
+  description: "Focus ONLY on Functional Correctness from the rules. Rate 1-5 with short justification. Output: Functional Correctness: score - justification DO NOT WRITE ANY CODE"
   expected_output: "Single line with score and justification i.e.: 5 - *justification*"
 
 tests_task:
-  description: "Focus ONLY on Tests from the rules. Rate 1-5 with short justification. Output: Tests: score - justification"
+  description: "Focus ONLY on Tests from the rules. Rate 1-5 with short justification. Output: Tests: score - justificationDO NOT WRITE ANY CODE"
   expected_output: "Single line with score and justification i.e.: 5 - *justification*"
 
 complexity_task:
-  description: "Focus ONLY on Complexity from the rules. Rate 1-5 with short justification. Output: Complexity: score - justification"
+  description: "Focus ONLY on Complexity from the rules. Rate 1-5 with short justification. Output: Complexity: score - justification DO NOT WRITE ANY CODE"
   expected_output: "Single line with score and justification i.e.: 5 - *justification*"
 
 duplication_task:
-  description: "Focus ONLY on Code Duplication from the rules. Rate 1-5 with short justification. Output: Code Duplication: score - justification"
+  description: "Focus ONLY on Code Duplication from the rules. Rate 1-5 with short justification. Output: Code Duplication: score - justification DO NOT WRITE ANY CODE"
   expected_output: "Single line with score and justification i.e.: 5 - *justification*"
 
 performance_task:
-  description: "Focus ONLY on Performance from the rules. Rate 1-5 with short justification. Output: Performance: score - justification"
+  description: "Focus ONLY on Performance from the rules. Rate 1-5 with short justification. Output: Performance: score - justification DO NOT WRITE ANY CODE"
   expected_output: "Single line with score and justification i.e.: 5 - *justification*"
 
 security_task:
-  description: "Focus ONLY on Security from the rules. Rate 1-5 with short justification. Output: Security: score - justification"
+  description: "Focus ONLY on Security from the rules. Rate 1-5 with short justification. Output: Security: score - justification DO NOT WRITE ANY CODE"
   expected_output: "Single line with score and justification i.e.: 5 - *justification*"
 
 maintainability_task:
-  description: "Focus ONLY on Maintainability from the rules. Rate 1-5 with short justification. Output: Maintainability: score - justification"
+  description: "Focus ONLY on Maintainability from the rules. Rate 1-5 with short justification. Output: Maintainability: score - justification DO NOT WRITE ANY CODE"
   expected_output: "Single line with score and justification i.e.: 5 - *justification*"
 
 compliance_task:
-  description: "Focus ONLY on Compliance with Standards from the rules. Rate 1-5 with short justification. Output: Compliance with Standards: score - justification"
+  description: "Focus ONLY on Compliance with Standards from the rules. Rate 1-5 with short justification. Output: Compliance with Standards: score - justification DO NOT WRITE ANY CODE"
   expected_output: "Single line with score and justification i.e.: 5 - *justification*"
 
 summary_task:
-  description: "Compile all previous evaluations. List each category with score and justification. Show sum of all out of 50 and average of points given. Add overall feedback. Use sum tool to get sum of points. Use average tool to get average points given."
-  expected_output: "i.e.: Readability: 4 - *justification*, Maintainability: 3 - *justification*, Security: 5 - *justification* [..] X/50 Average: X.X"
+  description: "Compile all previous evaluations. List each category with score and justification. Show sum of all out of 50. Add overall feedback. Use sum tool to get sum of points. DO NOT WRITE ANY CODE"
+  expected_output: "i.e.: Readability: 4 - *justification*, Maintainability: 3 - *justification*, Security: 5 - *justification* [..] **sum of points of each category from sum tool**/50"

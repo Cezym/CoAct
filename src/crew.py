@@ -14,8 +14,6 @@ llm_providers_config = load_yaml("../config/llm_providers.yaml")
 LLMS = {}
 
 for llm in llm_providers_config:
-    print(f"{llm=}")
-    print(f"{llm_providers_config[llm]=}")
     LLMS[llm] = LLM(**llm_providers_config[llm])
 
 
@@ -115,18 +113,11 @@ class DevelopersCrew:
     @crew
     def crew(self) -> Crew:
         """Creates the DevelopersCrew"""
-        for agent in self.agents:
-            print(agent)
-        print()
-        for task in self.tasks:
-            print(task)
         return Crew(
             agents=self.agents,  # Automatically created by the @agent decorator
             tasks=self.tasks,  # Automatically created by the @task decorator
             process=Process.sequential,
             verbose=True,
-            memory=False,
-            embedder=DevelopersCrew.llm_providers_config["memory_embedder"]
         )
 
 
@@ -358,4 +349,6 @@ class CodeEvaluationCrew:
             tasks=self.tasks,
             process=Process.sequential,
             verbose=True,
+            #memory=False,
+            #embedder=load_yaml("../config/embedders.yaml")["evaluation_crew_embedder"]
         )
