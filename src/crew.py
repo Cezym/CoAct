@@ -1,3 +1,5 @@
+# This file hasn't been modified from web-rag branch due to conflicts requiring extra insight 
+# To assign WebRag tool to the agents, please review crew.py in WebRag branch and apply changes manually (I didn't want to break anything here) - JK
 import math
 
 from crewai import Agent, Crew, Task, LLM
@@ -18,13 +20,18 @@ for llm in llm_providers_config:
     print(f"{llm_providers_config[llm]=}")
     LLMS[llm] = LLM(**llm_providers_config[llm])
 
+from src.tools.web_rag_tool import WebRAGTool
 
 @CrewBase
 class DevelopersCrew:
     """Developers crew"""
 
-    agents_config = "../config/agents.yaml"
-    tasks_config = "../config/tasks.yaml"
+    # Resolve config paths robustly regardless of where the process is started from.
+    _BASE_DIR = Path(__file__).resolve().parent.parent  # project root
+    _CONFIG_DIR = _BASE_DIR / "config"
+
+    agents_config = str(_CONFIG_DIR / "agents.yaml")
+    tasks_config = str(_CONFIG_DIR / "tasks.yaml")
 
     @agent
     def clarifier(self) -> Agent:
@@ -73,19 +80,11 @@ class DevelopersCrew:
 
     @task
     def clarifier_task(self) -> Task:
-        return Task(
-            name="clarifier_task",
-            config=self.tasks_config["clarifier_task"],
-            agent=self.clarifier(),
-        )
+        return Task(config=self.tasks_config["clarifier_task"], agent=self.clarifier())
 
     @task
     def code_task(self) -> Task:
-        return Task(
-            name="code_task",
-            config=self.tasks_config["code_task"],
-            agent=self.coder(),
-        )
+        return Task(config=self.tasks_config["code_task"], agent=self.coder())
 
     @task
     def review_task(self) -> Task:
@@ -99,7 +98,6 @@ class DevelopersCrew:
     @task
     def evaluate_task(self) -> Task:
         return Task(
-            name="evaluate_task",
             config=self.tasks_config["evaluate_task"],
             agent=self.chief_qa_engineer_agent(),
         )
@@ -107,7 +105,6 @@ class DevelopersCrew:
     @task
     def human_input_evaluation_task(self):
         return Task(
-            name="human_input_evaluation_task",
             config=self.tasks_config["human_input_evaluation_task"],
             agent=self.chief_qa_engineer_agent(),
         )

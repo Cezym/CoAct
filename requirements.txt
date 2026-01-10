@@ -1,0 +1,9 @@
+#dodane
+# Minimalne zależności do uruchomienia części "crew" lokalnie (poza Dockerem)
+crewai[embeddings,tools]>=1.6.0
+langchain-ollama>=1.0.0
+litellm>=1.80.5
+ollama>=0.6.1
+pyyaml>=6.0.3
+requests>=2.32.3
+#koniec

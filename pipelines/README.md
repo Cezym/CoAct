@@ -1,3 +1,4 @@
+#dodane
 # coact - Pipelines and Data Workflows
 
 ## Installation
@@ -30,3 +31,4 @@
         │   ├── input.json    <- Test input data
         │   └── output.json   <- Test output data
         └── test_pipelines.py <- Integration tests for the HTTP API
+#koniec

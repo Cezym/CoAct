@@ -1,0 +1,32 @@
+#dodane
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+
+  rag:
+    build:
+      context: ./rag_service
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+      - OLLAMA_EMBED_MODEL=nomic-embed-text:latest
+      - CHROMA_DIR=/data/chroma
+      # tiangolo/uvicorn-gunicorn-fastapi domyślnie może odpalić dużo workerów.
+      # Na dev laptopie to potrafi ubić kontener. 2 wystarcza do MVP.
+      - WEB_CONCURRENCY=2
+      # Optional allow-list (comma-separated). Example: "docs.python.org,fastapi.tiangolo.com"
+      - RAG_ALLOWED_DOMAINS=
+    volumes:
+      - rag-data:/data
+    ports:
+      - "8001:80"
+    depends_on:
+      - ollama
+
+volumes:
+  ollama:
+  rag-data:
+#koniec

@@ -1,3 +1,4 @@
+#dodane
 import os
 import sys
 
@@ -10,17 +11,14 @@ def run():
     print("## Welcome to the CoAct")
     print("-------------------------------")
 
-    inputs = {"task": input("write instructions:")}
-    developers_crew = DevelopersCrew().crew()
-    print(dir(developers_crew))
-    final_answer = developers_crew.kickoff(inputs=inputs)
+    inputs = {"task": "Write best script (role, goal, backstory) for AI agent that will write best tests for given code."}#input("write instructions:")}
+    final_answer = DevelopersCrew().crew().kickoff(inputs=inputs)
+
     print("\n\n########################")
     print("## Here is the result")
     print("########################\n")
     print("final code:...")
     print("\n\n########################")
-    tasks = {task.name: task for task in developers_crew.tasks}
-    print(tasks)
     print(final_answer)
 
 
@@ -48,3 +46,4 @@ if __name__ == "__main__":
     os.environ["OTEL_SDK_DISABLED"] = "true"  # Turn off telemetry
     os.environ["CREWAI_TRACING_ENABLED"] = "false" # Turn off tracing
     run()
+#koniec
