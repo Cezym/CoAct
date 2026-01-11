@@ -1,11 +1,10 @@
 """Crew that evaluates the generated code – CodeEvaluationCrew."""
 
 from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, agent, task, crew
+from crewai.project import CrewBase, agent, task, crew, tool
 
 from . import CrewConfigMixin
 from llm_provider import LLMS
-
 
 @CrewBase
 class CodeEvaluationCrew(CrewConfigMixin):
@@ -120,13 +119,13 @@ class CodeEvaluationCrew(CrewConfigMixin):
 
     # ---------- TOOL HELPERS ----------
     @staticmethod
-    @task  # <-- use `@tool` – but crewai expects `@tool`; keep as is
+    @tool
     def average_tool(numbers: list) -> str:
         """Useful for when you need to get average of a list of numbers."""
         return str(sum(numbers) / len(numbers))
 
     @staticmethod
-    @task
+    @tool
     def sum_tool(numbers: list) -> str:
         """Useful for when you need to get sum of a list of numbers."""
         return str(sum(numbers))
