@@ -2,10 +2,12 @@
 
 import argparse
 import os
+import time
 from pathlib import Path
 import re
 
 import crewai.task
+from crewai.types.streaming import CrewStreamingOutput
 
 from crewai import Process, Crew
 
@@ -145,10 +147,14 @@ def run_cli() -> None:
         print("Summary:")
         print(result_eval)
 
+        while isinstance(result_eval, CrewStreamingOutput): # For syncing output
+            time.sleep(1)
+
         print("Details:")
         sum = 0
-        for task in crew_eval.tasks:
-            sum += int(re.search(r"Points given:\s*(\d+)\s*-", task.output.raw).group(1))
+        for task in crew_eval.tasks[:-1]:
+            sum += int(re.search(r"Points given:\s*(\d)\s*-", str(task.output)).group(1))
+            print(f"===== {task.name.split('_')[0].title()} =====")
             print(task.output)
         print("Total points: ", sum)
         print("Average: ", sum / 10)
