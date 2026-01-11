@@ -2,14 +2,12 @@
 
 import argparse
 import os
+import re
 import time
 from pathlib import Path
-import re
-
-import crewai.task
-from crewai.types.streaming import CrewStreamingOutput
 
 from crewai import Process, Crew
+from crewai.types.streaming import CrewStreamingOutput
 
 from crew.developers_crew import DevelopersCrew
 from crew.evaluation_crew import CodeEvaluationCrew
@@ -73,15 +71,9 @@ def parse_args() -> argparse.Namespace:
         type=str,
         help="Input prompt for DevelopersCrew.",
     )
+    parser.add_argument("--verbose", action="store_true", help="Print debug info.")
     parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Print debug info."
-    )
-    parser.add_argument(
-        "--memory",
-        action="store_true",
-        help="Enable memory for crews."
+        "--memory", action="store_true", help="Enable memory for crews."
     )
     return parser.parse_args()
 
@@ -147,9 +139,9 @@ def run_cli() -> None:
         print("Summary:")
         print(result_eval)
 
-        while isinstance(result_eval, CrewStreamingOutput): # For syncing output
+        while isinstance(result_eval, CrewStreamingOutput):  # For syncing output
             time.sleep(1)
-        time.sleep(3) # Synching with output
+        time.sleep(3)  # Synching with output
         print("Details:")
         sum = 0
         for task in crew_eval.tasks:
@@ -159,7 +151,9 @@ def run_cli() -> None:
             if title == "Summary":
                 continue
             try:
-                points_given = int(re.search(r"Points given:\s*(\d)\s*-", str(task.output)).group(1))
+                points_given = int(
+                    re.search(r"Points given:\s*(\d)\s*-", str(task.output)).group(1)
+                )
             except AttributeError:
                 points_given = int(re.search(r".+(\d)\s*-", str(task.output)).group(1))
             sum += points_given

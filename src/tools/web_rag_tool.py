@@ -30,7 +30,10 @@ except Exception:  # pragma: no cover
 
 
 class WebRAGInput(BaseModel):
-    query: str = Field(..., description="Question to ask, e.g. 'How to configure FastAPI CORS middleware?' ")
+    query: str = Field(
+        ...,
+        description="Question to ask, e.g. 'How to configure FastAPI CORS middleware?' ",
+    )
     scope: str = Field(
         default="global",
         description="Namespace for cached docs. Use e.g. 'fastapi', 'react', 'numpy'.",
@@ -40,11 +43,14 @@ class WebRAGInput(BaseModel):
         description="If true, service will do web search and ingest top results before querying.",
     )
     k: int = Field(default=6, ge=1, le=20, description="How many chunks to retrieve")
-    max_search_results: int = Field(default=5, ge=1, le=10, description="How many web search results to consider")
+    max_search_results: int = Field(
+        default=5, ge=1, le=10, description="How many web search results to consider"
+    )
     force_refresh: bool = Field(
         default=False,
         description="If true, re-download & re-index URLs even if already cached.",
     )
+
 
 class WebRAGTool(BaseTool):
     name: str = "web_rag"
@@ -56,13 +62,13 @@ class WebRAGTool(BaseTool):
     args_schema = WebRAGInput
 
     def _run(
-            self,
-            query: str,
-            scope: str = "global",
-            search: bool = True,
-            k: int = 6,
-            max_search_results: int = 5,
-            force_refresh: bool = False,
+        self,
+        query: str,
+        scope: str = "global",
+        search: bool = True,
+        k: int = 6,
+        max_search_results: int = 5,
+        force_refresh: bool = False,
     ) -> str:
         base = os.getenv("RAG_SERVICE_URL", "http://localhost:8001").rstrip("/")
         payload = {

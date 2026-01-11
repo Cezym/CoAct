@@ -3,6 +3,7 @@ Shared logic for loading agents/tasks config.
 
 Both DevelopersCrew and CodeEvaluationCrew import the mixin below.
 """
+
 from pathlib import Path
 from typing import Dict, Any
 
