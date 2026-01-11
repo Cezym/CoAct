@@ -114,9 +114,3 @@ compliance_agent:
   goal: "Verify compliance with style guides and conventions"
   backstory: "You run linters. Enforce consistent naming, formatting, and team rules."
   llm_model: local_llama3_1_8b
-
-summary_agent:
-  role: "Code Evaluation Summarizer"
-  goal: "Compile all category scores into a final report with total score"
-  backstory: "You are the lead reviewer. Collect individual evaluations and provide overall feedback."
-  llm_model: local_llama3_1_8b

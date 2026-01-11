@@ -122,7 +122,3 @@ maintainability_task:
 compliance_task:
   description: "Focus ONLY on Compliance with Standards from the rules. Rate 1-5 with short justification. Output: Compliance with Standards: score - justification"
   expected_output: "Single line with score and justification i.e.: Points given: 5 - *justification*"
-
-summary_task:
-  description: "Compile all previous evaluations. List each category with score and justification. Show sum of all out of 50. Add overall feedback. Use sum tool to get sum of points."
-  expected_output: "i.e.: Readability: 4 - *justification*, Maintainability: 3 - *justification*, Security: 5 - *justification*, ..., Compliance: 5 - *justification* [..] X/50"

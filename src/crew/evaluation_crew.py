@@ -130,27 +130,6 @@ class CodeEvaluationCrew:
     def compliance_task(self) -> Task:
         return self._task_with_code("compliance_task")
 
-    # ---------- SUMMARY TASK ----------
-    @task
-    def summary_task(self) -> Task:
-        cfg = CrewConfigMixin.crew_tasks_config()["summary_task"]
-        return Task(
-            config=cfg,
-            agent=self.summary_agent(),
-            context=[
-                self.readability_task(),
-                self.documentation_task(),
-                self.functional_task(),
-                self.tests_task(),
-                self.complexity_task(),
-                self.duplication_task(),
-                self.performance_task(),
-                self.security_task(),
-                self.maintainability_task(),
-                self.compliance_task(),
-            ],
-        )
-
     # ---------- CREW ----------
     @crew
     def crew(self) -> Crew:

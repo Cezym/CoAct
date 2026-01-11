@@ -17,16 +17,12 @@ RAG_SERVICE_URL: base url of the rag service (default: http://localhost:8001)
 from __future__ import annotations
 
 import os
+from typing import Type
 
 import requests
 from pydantic import BaseModel, Field
 
-try:
-    # crewai_tools ships with CrewAI when installed with [tools]
-    from crewai_tools import BaseTool
-except Exception:  # pragma: no cover
-    # Fallback type so the file can be imported even when tools extras aren't installed
-    BaseTool = object  # type: ignore
+from crewai.tools import BaseTool
 
 
 class WebRAGInput(BaseModel):
@@ -59,7 +55,7 @@ class WebRAGTool(BaseTool):
         "Use it when you need up-to-date API docs or examples for a library/tool. "
         "Returns SOURCE URLs + excerpts."
     )
-    args_schema = WebRAGInput
+    args_schema: Type[BaseModel] = WebRAGInput
 
     def _run(
         self,
