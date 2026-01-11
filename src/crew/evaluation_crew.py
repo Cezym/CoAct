@@ -13,57 +13,57 @@ class CodeEvaluationCrew(CrewConfigMixin):
     # ---------- AGENTS ----------
     @agent
     def readability_agent(self) -> Agent:
-        cfg = self.agents_config["readability_agent"]
+        cfg = self.crew_agents_config["readability_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     @agent
     def documentation_agent(self) -> Agent:
-        cfg = self.agents_config["documentation_agent"]
+        cfg = self.crew_agents_config["documentation_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     @agent
     def functional_agent(self) -> Agent:
-        cfg = self.agents_config["functional_agent"]
+        cfg = self.crew_agents_config["functional_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     @agent
     def tests_agent(self) -> Agent:
-        cfg = self.agents_config["tests_agent"]
+        cfg = self.crew_agents_config["tests_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     @agent
     def complexity_agent(self) -> Agent:
-        cfg = self.agents_config["complexity_agent"]
+        cfg = self.crew_agents_config["complexity_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     @agent
     def duplication_agent(self) -> Agent:
-        cfg = self.agents_config["duplication_agent"]
+        cfg = self.crew_agents_config["duplication_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     @agent
     def performance_agent(self) -> Agent:
-        cfg = self.agents_config["performance_agent"]
+        cfg = self.crew_agents_config["performance_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     @agent
     def security_agent(self) -> Agent:
-        cfg = self.agents_config["security_agent"]
+        cfg = self.crew_agents_config["security_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     @agent
     def maintainability_agent(self) -> Agent:
-        cfg = self.agents_config["maintainability_agent"]
+        cfg = self.crew_agents_config["maintainability_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     @agent
     def compliance_agent(self) -> Agent:
-        cfg = self.agents_config["compliance_agent"]
+        cfg = self.crew_agents_config["compliance_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     @agent
     def summary_agent(self) -> Agent:
-        cfg = self.agents_config["summary_agent"]
+        cfg = self.crew_agents_config["summary_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
     # ---------- TASKS ----------
@@ -133,7 +133,7 @@ class CodeEvaluationCrew(CrewConfigMixin):
     # ---------- SUMMARY TASK ----------
     @task
     def summary_task(self) -> Task:
-        cfg = self.tasks_config["summary_task"]
+        cfg = self.crew_tasks_config["summary_task"]
         return Task(
             config=cfg,
             agent=self.summary_agent(),
