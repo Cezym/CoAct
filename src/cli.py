@@ -22,6 +22,7 @@ def _set_verbose_mode(crew: Crew, verobse_enabled: bool) -> None:
     """If `verbose_enabled` is True, mark verbose for every agent as True."""
     if not verobse_enabled:
         return
+    crew.verbose = True
     for a in crew.agents:
         a.verbose = True
 
@@ -81,7 +82,6 @@ def run_cli() -> None:
     crew_main.process = Process.sequential
     if args.mode == "parallel":
         _set_async_mode(crew_main, async_enabled=True)
-
     if args.verbose:
         _set_verbose_mode(crew_main, verobse_enabled=True)
 
@@ -95,7 +95,7 @@ def run_cli() -> None:
     if args.evaluate:
         eval_crew_obj = CodeEvaluationCrew()
         eval_crew_obj._agents_cfg_path = str(config_dir / "agents.yaml")
-        eval_crew_obj._tasks_cfg_path   = str(config_dir / "tasks.yaml")
+        eval_crew_obj._tasks_cfg_path = str(config_dir / "tasks.yaml")
 
         crew_eval = eval_crew_obj.crew()
 
@@ -103,6 +103,8 @@ def run_cli() -> None:
 
         if args.mode == "parallel":
             _set_async_mode(crew_eval, async_enabled=True)
+        if args.verbose:
+            _set_verbose_mode(crew_eval, verobse_enabled=True)
 
         print("\n>>> Running CodeEvaluationCrew ...")
         eval_inputs = {"code": result_main}
