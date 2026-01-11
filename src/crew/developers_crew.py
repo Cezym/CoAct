@@ -20,6 +20,7 @@ class DevelopersCrew(CrewConfigMixin):
             config=cfg,
             allow_delegation=False,
             #tools=[WebRAGTool],
+            verbose=True,
             llm=LLMS[cfg["llm_model"]],
         )
 

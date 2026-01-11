@@ -18,6 +18,14 @@ def _set_async_mode(crew: Crew, async_enabled: bool) -> None:
         t.async_execution = True
 
 
+def _set_verbose_mode(crew: Crew, verobse_enabled: bool) -> None:
+    """If `verbose_enabled` is True, mark verbose for every agent as True."""
+    if not verobse_enabled:
+        return
+    for a in crew.agents:
+        a.verbose = True
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="coact",
@@ -47,6 +55,11 @@ def parse_args() -> argparse.Namespace:
         default="config",
         help="Directory containing agents.yaml & tasks.yaml (default: ./config)",
     )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Print debug info."
+    )
     return parser.parse_args()
 
 
@@ -69,11 +82,11 @@ def run_cli() -> None:
     if args.mode == "parallel":
         _set_async_mode(crew_main, async_enabled=True)
 
+    if args.verbose:
+        _set_verbose_mode(crew_main, verobse_enabled=True)
+
     print("\n>>> Running DevelopersCrew ...")
-    inputs_main = {"task": (
-        "Write a script (role, goal, backstory) that will write best tests "
-        "for the given code."
-    )}
+    inputs_main = {"task": input("Input task for DevelopersCrew:")}
     result_main = crew_main.kickoff(inputs=inputs_main)
     print("=== MAIN RESULT ===")
     print(result_main)
