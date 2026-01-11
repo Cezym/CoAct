@@ -26,6 +26,12 @@ def _set_verbose_mode(crew: Crew, verobse_enabled: bool) -> None:
     for a in crew.agents:
         a.verbose = True
 
+def _set_memory(crew: Crew, memory_enabled: bool) -> None:
+    """If `memory_enabled` is True, enable memory for crew."""
+    if not memory_enabled:
+        return
+    crew.memory = True
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -57,9 +63,19 @@ def parse_args() -> argparse.Namespace:
         help="Directory containing agents.yaml & tasks.yaml (default: ./config)",
     )
     parser.add_argument(
+        "--input",
+        type=str,
+        help="Input prompt for DevelopersCrew.",
+    )
+    parser.add_argument(
         "--verbose",
         action="store_true",
         help="Print debug info."
+    )
+    parser.add_argument(
+        "--memory",
+        action="store_true",
+        help="Enable memory for crews."
     )
     return parser.parse_args()
 
@@ -84,9 +100,17 @@ def run_cli() -> None:
         _set_async_mode(crew_main, async_enabled=True)
     if args.verbose:
         _set_verbose_mode(crew_main, verobse_enabled=True)
+    if args.memory:
+        _set_memory(crew_main, memory_enabled=True)
 
     print("\n>>> Running DevelopersCrew ...")
-    inputs_main = {"task": input("Input task for DevelopersCrew:")}
+
+    input_prompt = args.input
+
+    if not input_prompt:
+        input_prompt = input("Enter your task: ")
+
+    inputs_main = {"task": input_prompt}
     result_main = crew_main.kickoff(inputs=inputs_main)
     print("=== MAIN RESULT ===")
     print(result_main)
@@ -105,13 +129,23 @@ def run_cli() -> None:
             _set_async_mode(crew_eval, async_enabled=True)
         if args.verbose:
             _set_verbose_mode(crew_eval, verobse_enabled=True)
+        if args.memory:
+            _set_memory(crew_eval, memory_enabled=True)
 
         print("\n>>> Running CodeEvaluationCrew ...")
-        eval_inputs = {"code": result_main}
+        eval_inputs = {"code": str(result_main)}
 
         result_eval = crew_eval.kickoff(inputs=eval_inputs)
         print("=== EVALUATION RESULT ===")
+
+        print("Summary:")
         print(result_eval)
+
+        print("Details:")
+        for task in crew_eval.tasks:
+            print(task)
+            print(dir(task))
+            print(task.__class__)
 
     # Exit status
     exit_code = 0

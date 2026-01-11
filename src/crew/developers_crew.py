@@ -3,81 +3,83 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, task, crew
 
+import config_loader
+from embedder_provider import EMBEDDERS
 from . import CrewConfigMixin
 from llm_provider import LLMS
 from tools.web_rag_tool import WebRAGTool
 
 
 @CrewBase
-class DevelopersCrew(CrewConfigMixin):
+class DevelopersCrew:
     """Crew that creates code and performs a first review."""
 
     # ---------- AGENTS ----------
     @agent
     def clarifier_agent(self) -> Agent:
-        cfg = self.crew_agents_config["clarifier_agent"]
+        cfg = CrewConfigMixin.crew_agents_config()["clarifier_agent"]
         return Agent(
             config=cfg,
             allow_delegation=False,
-            #tools=[WebRAGTool],
+            # tools=[WebRAGTool],
             verbose=True,
             llm=LLMS[cfg["llm_model"]],
         )
 
     @agent
     def coder_agent(self) -> Agent:
-        cfg = self.crew_agents_config["coder_agent"]
+        cfg = CrewConfigMixin.crew_agents_config()["coder_agent"]
         return Agent(
             config=cfg,
             allow_delegation=False,
-            #tools=[WebRAGTool],
+            # tools=[WebRAGTool],
             llm=LLMS[cfg["llm_model"]],
         )
 
     @agent
     def qa_engineer_agent(self) -> Agent:
-        cfg = self.crew_agents_config["qa_engineer_agent"]
+        cfg = CrewConfigMixin.crew_agents_config()["qa_engineer_agent"]
         return Agent(
             config=cfg,
             allow_delegation=False,
-            #tools=[WebRAGTool],
+            # tools=[WebRAGTool],
             llm=LLMS[cfg["llm_model"]],
         )
 
     @agent
     def chief_qa_engineer_agent(self) -> Agent:
-        cfg = self.crew_agents_config["chief_qa_engineer_agent"]
+        cfg = CrewConfigMixin.crew_agents_config()["chief_qa_engineer_agent"]
         return Agent(
             config=cfg,
             allow_delegation=False,
-            #tools=[WebRAGTool],
+            # tools=[WebRAGTool],
             llm=LLMS[cfg["llm_model"]],
         )
 
     # ---------- TASKS ----------
     @task
     def clarifier_task(self) -> Task:
-        cfg = self.crew_tasks_config["clarifier_task"]
+        cfg = CrewConfigMixin.crew_tasks_config()["clarifier_task"]
         return Task(config=cfg, agent=self.clarifier_agent())
 
     @task
     def code_task(self) -> Task:
-        cfg = self.crew_tasks_config["code_task"]
+        cfg = CrewConfigMixin.crew_tasks_config()["code_task"]
         return Task(config=cfg, agent=self.coder_agent())
 
     @task
     def review_task(self) -> Task:
-        cfg = self.crew_tasks_config["review_task"]
+        cfg = CrewConfigMixin.crew_tasks_config()["review_task"]
         return Task(config=cfg, agent=self.qa_engineer_agent())
 
     @task
     def evaluate_task(self) -> Task:
-        cfg = self.crew_tasks_config["evaluate_task"]
+        cfg = CrewConfigMixin.crew_tasks_config()["evaluate_task"]
         return Task(config=cfg, agent=self.chief_qa_engineer_agent())
 
     @task
     def human_input_evaluation_task(self):
-        cfg = self.crew_tasks_config["human_input_evaluation_task"]
+        cfg = CrewConfigMixin.crew_tasks_config()["human_input_evaluation_task"]
         return Task(config=cfg, agent=self.chief_qa_engineer_agent())
 
     # ---------- CREW ----------
@@ -89,5 +91,5 @@ class DevelopersCrew(CrewConfigMixin):
             tasks=self.tasks,  # automatically collected by decorators
             process=Process.sequential,  # overridden from CLI later
             memory=False,
-            embedder=None,
+            embedder=EMBEDDERS["developers_crew_embedder"],
         )
