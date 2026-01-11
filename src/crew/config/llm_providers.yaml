@@ -10,7 +10,6 @@ local_llama3_1_8b:
   api_base: "http://127.0.0.1:11434"
 
 # Uncomment to enable Nomic dependency.:
-
 #local_nomic-embed-text_latest:
 #  provider: "ollama"
 #  config:

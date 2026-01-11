@@ -1,4 +1,3 @@
-#dodane
 """CrewAI tool that queries the local WebRAG microservice.
 
 The microservice (rag_service) is responsible for:
@@ -18,7 +17,6 @@ RAG_SERVICE_URL: base url of the rag service (default: http://localhost:8001)
 from __future__ import annotations
 
 import os
-from typing import Optional
 
 import requests
 from pydantic import BaseModel, Field
@@ -48,7 +46,6 @@ class WebRAGInput(BaseModel):
         description="If true, re-download & re-index URLs even if already cached.",
     )
 
-
 class WebRAGTool(BaseTool):
     name: str = "web_rag"
     description: str = (
@@ -59,13 +56,13 @@ class WebRAGTool(BaseTool):
     args_schema = WebRAGInput
 
     def _run(
-        self,
-        query: str,
-        scope: str = "global",
-        search: bool = True,
-        k: int = 6,
-        max_search_results: int = 5,
-        force_refresh: bool = False,
+            self,
+            query: str,
+            scope: str = "global",
+            search: bool = True,
+            k: int = 6,
+            max_search_results: int = 5,
+            force_refresh: bool = False,
     ) -> str:
         base = os.getenv("RAG_SERVICE_URL", "http://localhost:8001").rstrip("/")
         payload = {
@@ -86,4 +83,3 @@ class WebRAGTool(BaseTool):
                 "[web_rag error] Could not reach WebRAG service. "
                 f"Make sure docker-compose is running and RAG_SERVICE_URL is correct. Details: {e}"
             )
-#koniec

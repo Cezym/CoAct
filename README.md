@@ -1,4 +1,3 @@
-#dodane
 # CoAct (MVP) + Web RAG
 
 
