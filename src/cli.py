@@ -3,6 +3,9 @@
 import argparse
 import os
 from pathlib import Path
+import re
+
+import crewai.task
 
 from crewai import Process, Crew
 
@@ -25,6 +28,7 @@ def _set_verbose_mode(crew: Crew, verobse_enabled: bool) -> None:
     crew.verbose = True
     for a in crew.agents:
         a.verbose = True
+
 
 def _set_memory(crew: Crew, memory_enabled: bool) -> None:
     """If `memory_enabled` is True, enable memory for crew."""
@@ -142,10 +146,12 @@ def run_cli() -> None:
         print(result_eval)
 
         print("Details:")
+        sum = 0
         for task in crew_eval.tasks:
-            print(task)
-            print(dir(task))
-            print(task.__class__)
+            sum += int(re.search(r"Points given:\s*(\d+)\s*-", task.output.raw).group(1))
+            print(task.output)
+        print("Total points: ", sum)
+        print("Average: ", sum / 10)
 
     # Exit status
     exit_code = 0

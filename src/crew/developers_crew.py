@@ -3,10 +3,9 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, task, crew
 
-import config_loader
 from embedder_provider import EMBEDDERS
-from . import CrewConfigMixin
 from llm_provider import LLMS
+from . import CrewConfigMixin
 from tools.web_rag_tool import WebRAGTool
 
 
