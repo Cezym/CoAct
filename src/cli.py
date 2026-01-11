@@ -149,13 +149,20 @@ def run_cli() -> None:
 
         while isinstance(result_eval, CrewStreamingOutput): # For syncing output
             time.sleep(1)
-
+        time.sleep(3) # Synching with output
         print("Details:")
         sum = 0
-        for task in crew_eval.tasks[:-1]:
-            sum += int(re.search(r"Points given:\s*(\d)\s*-", str(task.output)).group(1))
-            print(f"===== {task.name.split('_')[0].title()} =====")
+        for task in crew_eval.tasks:
+            title = f"===== {task.name.split('_')[0].title()} ====="
+            print(title)
             print(task.output)
+            if title == "Summary":
+                continue
+            try:
+                points_given = int(re.search(r"Points given:\s*(\d)\s*-", str(task.output)).group(1))
+            except AttributeError:
+                points_given = int(re.search(r".+(\d)\s*-", str(task.output)).group(1))
+            sum += points_given
         print("Total points: ", sum)
         print("Average: ", sum / 10)
 
