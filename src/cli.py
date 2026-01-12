@@ -159,12 +159,3 @@ def run_cli() -> None:
             sum += points_given
         print("Total points: ", sum)
         print("Average: ", sum / 10)
-
-    # Exit status
-    exit_code = 0
-    if "error" in str(result_main).lower():
-        exit_code = 1
-    if args.evaluate and ("error" in str(result_eval).lower()):
-        exit_code = 1
-
-    raise SystemExit(exit_code)
