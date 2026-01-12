@@ -136,6 +136,6 @@ class CodeEvaluationCrew:
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
-            process=Process.sequential,  # overridden from CLI later
+            process=Process.sequential,
             embedder=EMBEDDERS["evaluation_crew_embedder"],
         )

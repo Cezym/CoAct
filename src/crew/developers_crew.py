@@ -87,7 +87,7 @@ class DevelopersCrew:
         return Crew(
             agents=self.agents,  # automatically collected by decorators
             tasks=self.tasks,  # automatically collected by decorators
-            process=Process.sequential,  # overridden from CLI later
+            process=Process.sequential,
             memory=False,
             embedder=EMBEDDERS["developers_crew_embedder"],
         )
