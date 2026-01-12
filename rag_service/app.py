@@ -1,4 +1,3 @@
-#dodane
 
 
 from __future__ import annotations
@@ -584,4 +583,3 @@ def ask(req: AskRequest) -> AskResponse:
         ingested_urls=ingested_urls,
         ingested_chunks=ingested_chunks,
     )
-#koniec

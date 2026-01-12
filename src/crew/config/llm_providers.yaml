@@ -1,4 +1,3 @@
-# Resolved conflicts - Focused on merging both branches for LLM Providers (Nomic was added as an extra model!) - JK
 local_gpt_oss_20b:
   provider: "openai"
   model: "openai/gpt-oss-20b"
@@ -8,14 +7,6 @@ local_gpt_oss_20b:
 local_llama3_1_8b:
   model: "ollama/llama3.1:8b"
   api_base: "http://127.0.0.1:11434"
-
-# Uncomment to enable Nomic dependency.:
-
-#local_nomic-embed-text_latest:
-#  provider: "ollama"
-#  config:
-#    model_name: "nomic-embed-text:latest"
-#    url: "http://localhost:11434/api/embeddings"
 
 local_codegemma_7b:
   model: "ollama/codegemma:7b"

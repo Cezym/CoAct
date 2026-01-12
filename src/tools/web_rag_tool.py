@@ -1,4 +1,3 @@
-#dodane
 """CrewAI tool that queries the local WebRAG microservice.
 
 The microservice (rag_service) is responsible for:
@@ -18,21 +17,19 @@ RAG_SERVICE_URL: base url of the rag service (default: http://localhost:8001)
 from __future__ import annotations
 
 import os
-from typing import Optional
+from typing import Type
 
 import requests
 from pydantic import BaseModel, Field
 
-try:
-    # crewai_tools ships with CrewAI when installed with [tools]
-    from crewai_tools import BaseTool
-except Exception:  # pragma: no cover
-    # Fallback type so the file can be imported even when tools extras aren't installed
-    BaseTool = object  # type: ignore
+from crewai.tools import BaseTool
 
 
 class WebRAGInput(BaseModel):
-    query: str = Field(..., description="Question to ask, e.g. 'How to configure FastAPI CORS middleware?' ")
+    query: str = Field(
+        ...,
+        description="Question to ask, e.g. 'How to configure FastAPI CORS middleware?' ",
+    )
     scope: str = Field(
         default="global",
         description="Namespace for cached docs. Use e.g. 'fastapi', 'react', 'numpy'.",
@@ -42,7 +39,9 @@ class WebRAGInput(BaseModel):
         description="If true, service will do web search and ingest top results before querying.",
     )
     k: int = Field(default=6, ge=1, le=20, description="How many chunks to retrieve")
-    max_search_results: int = Field(default=5, ge=1, le=10, description="How many web search results to consider")
+    max_search_results: int = Field(
+        default=5, ge=1, le=10, description="How many web search results to consider"
+    )
     force_refresh: bool = Field(
         default=False,
         description="If true, re-download & re-index URLs even if already cached.",
@@ -56,7 +55,7 @@ class WebRAGTool(BaseTool):
         "Use it when you need up-to-date API docs or examples for a library/tool. "
         "Returns SOURCE URLs + excerpts."
     )
-    args_schema = WebRAGInput
+    args_schema: Type[BaseModel] = WebRAGInput
 
     def _run(
         self,
@@ -86,4 +85,3 @@ class WebRAGTool(BaseTool):
                 "[web_rag error] Could not reach WebRAG service. "
                 f"Make sure docker-compose is running and RAG_SERVICE_URL is correct. Details: {e}"
             )
-#koniec
