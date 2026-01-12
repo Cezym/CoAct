@@ -30,7 +30,7 @@ class DevelopersCrew:
         return Agent(
             config=cfg,
             allow_delegation=False,
-            tools=[WebRAGTool()],
+            # tools=[WebRAGTool()], ### under development ###
             llm=LLMS[cfg["llm_model"]],
         )
 
@@ -40,7 +40,7 @@ class DevelopersCrew:
         return Agent(
             config=cfg,
             allow_delegation=False,
-            tools=[WebRAGTool()],
+            # tools=[WebRAGTool()], ### under development ###
             llm=LLMS[cfg["llm_model"]],
         )
 
@@ -50,7 +50,7 @@ class DevelopersCrew:
         return Agent(
             config=cfg,
             allow_delegation=False,
-            tools=[WebRAGTool()],
+            # tools=[WebRAGTool()], ### under development ###
             llm=LLMS[cfg["llm_model"]],
         )
 
