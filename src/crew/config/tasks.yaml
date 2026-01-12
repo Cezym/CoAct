@@ -19,7 +19,6 @@ code_task:
     
     {task}
 
-    If you need current documentation for any library/tool, use the `web_rag` tool.
   expected_output: >
     Your Final answer must be the full python code, only the python code and nothing else.
 
@@ -35,10 +34,6 @@ review_task:
     Using the code you got, check for errors. Check for logic errors,
     syntax errors, missing imports, variable declarations, mismatched brackets,
     and security vulnerabilities.
-
-    If you need to validate any API/behavior, use the `web_rag` tool to pull documentation excerpts.
-
-    If you need to confirm correct API usage, use the `web_rag` tool.
   expected_output: >
     Your Final answer must be the full python code, only the python code and nothing else.
 
@@ -53,12 +48,6 @@ evaluate_task:
 
     You will look over the code to insure that it is complete and
     does the job that it is supposed to do.
-
-    If the task depends on external libraries/frameworks, use the `web_rag` tool to confirm the expected behavior.
-
-    If correctness depends on external libraries, use the `web_rag` tool to cross-check requirements against documentation.
-
-    If requirements depend on third-party libraries, use the `web_rag` tool to validate details.
   expected_output: >
     Your Final answer must be the full python code, only the python code and nothing else.
 
@@ -73,10 +62,6 @@ human_input_evaluation_task:
 
     Ask human if anything more is needed to change, add or remove?
     Be sure to include in code everything that human said.
-
-    If the human requests changes involving external libs/tools, use the `web_rag` tool to confirm correct usage.
-
-    If the requested changes involve third-party libraries, use the `web_rag` tool to confirm correct usage.
   human_input: True
   expected_output: >
     Your Final answer must be the full python code, only the python code and nothing else.
