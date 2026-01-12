@@ -109,7 +109,9 @@ def run_cli() -> None:
         input_prompt = input("Enter your task: ")
 
     inputs_main = {"task": input_prompt}
-    result_main = crew_main.kickoff(inputs=inputs_main)
+    #result_main = crew_main.kickoff(inputs=inputs_main)
+    with open('../game.py', 'r') as file:
+        result_main = file.read()
     print("=== MAIN RESULT ===")
     print(result_main)
 
@@ -155,7 +157,8 @@ def run_cli() -> None:
                     re.search(r"Points given:\s*(\d)\s*-", str(task.output)).group(1)
                 )
             except AttributeError:
-                points_given = int(re.search(r".+(\d)\s*-", str(task.output)).group(1))
+                points_given = int(re.search(r".+(\d)\s*", str(task.output)).group(1)) # Fallback - assuming first digit is the points given
+            print("Points given: ", points_given)
             sum += points_given
         print("Total points: ", sum)
         print("Average: ", sum / 10)
