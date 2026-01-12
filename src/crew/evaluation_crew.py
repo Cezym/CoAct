@@ -64,21 +64,6 @@ class CodeEvaluationCrew:
         cfg = CrewConfigMixin.crew_agents_config()["compliance_agent"]
         return Agent(config=cfg, llm=LLMS[cfg["llm_model"]])
 
-    @staticmethod
-    @tool("sum_tool")
-    def sum_tool(numbers: list) -> str:
-        """Useful for when you need to get sum of a list of numbers."""
-        return str(sum(numbers))
-
-    @agent
-    def summary_agent(self) -> Agent:
-        cfg = CrewConfigMixin.crew_agents_config()["summary_agent"]
-        return Agent(
-            config=cfg,
-            llm=LLMS[cfg["llm_model"]],
-            tools=[self.sum_tool],
-        )
-
     # ---------- TASKS ----------
     def _task_with_code(self, key: str) -> Task:
         """Helper that builds a task that expects a `{code}` variable."""
