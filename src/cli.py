@@ -109,9 +109,7 @@ def run_cli() -> None:
         input_prompt = input("Enter your task: ")
 
     inputs_main = {"task": input_prompt}
-    #result_main = crew_main.kickoff(inputs=inputs_main)
-    with open('../game.py', 'r') as file:
-        result_main = file.read()
+    result_main = crew_main.kickoff(inputs=inputs_main)
     print("=== MAIN RESULT ===")
     print(result_main)
 
