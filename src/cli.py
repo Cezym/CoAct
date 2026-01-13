@@ -155,7 +155,9 @@ def run_cli() -> None:
                     re.search(r"Points given:\s*(\d)\s*-", str(task.output)).group(1)
                 )
             except AttributeError:
-                points_given = int(re.search(r".+(\d)\s*", str(task.output)).group(1)) # Fallback - assuming first digit is the points given
+                points_given = int(
+                    re.search(r".+(\d)\s*", str(task.output)).group(1)
+                )  # Fallback - assuming first digit is the points given
             sum += points_given
         print("Total points: ", sum)
         print("Average: ", sum / 10)

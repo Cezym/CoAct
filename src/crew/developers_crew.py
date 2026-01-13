@@ -6,7 +6,6 @@ from crewai.project import CrewBase, agent, task, crew
 from embedder_provider import EMBEDDERS
 from llm_provider import LLMS
 from . import CrewConfigMixin
-from tools.web_rag_tool import WebRAGTool
 
 
 @CrewBase

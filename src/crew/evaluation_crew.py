@@ -2,7 +2,6 @@
 
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, task, crew
-from crewai.tools import tool
 
 from embedder_provider import EMBEDDERS
 from llm_provider import LLMS
